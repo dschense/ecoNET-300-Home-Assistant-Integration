@@ -181,11 +181,14 @@ def create_mixer_sensors(
     def mixer_filter(key: str) -> bool:
         return all(
             coordinator.data.get("regParams", {}).get(k) is not None
-            for k in list(SENSOR_MIXER_KEY.get(key, []))
+            for k in SENSOR_MIXER_KEY.get(int(key), set())
         )
 
+    # Convert integer keys to strings for create_sensors
+    keys_as_strings = [str(k) for k in SENSOR_MIXER_KEY]
+
     return create_sensors(
-        list(SENSOR_MIXER_KEY.keys()),
+        keys_as_strings,
         coordinator,
         api,
         MixerSensor,
