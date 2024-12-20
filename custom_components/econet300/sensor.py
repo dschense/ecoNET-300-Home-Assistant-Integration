@@ -122,7 +122,7 @@ def create_sensors(
     process_val=lambda x: x,
     filter_condition: Callable[[str], bool] = lambda key: True,
 ) -> list:
-    """Generic function to create sensors."""
+    """Create sensors using the provided keys and conditions."""
     entities = []
     reg_data = coordinator.data.get("regParams", {})
     sys_data = coordinator.data.get("sysParams", {})
@@ -153,7 +153,7 @@ def create_controller_sensors(
 ) -> list[EconetSensor]:
     """Create controller sensor entities."""
     return create_sensors(
-        SENSOR_MAP_KEY["_default"],
+        list(SENSOR_MAP_KEY["_default"]),
         coordinator,
         api,
         EconetSensor,
@@ -186,7 +186,7 @@ def create_mixer_sensors(
         )
 
     return create_sensors(
-        SENSOR_MIXER_KEY.keys(),
+        list(SENSOR_MIXER_KEY.keys()),
         coordinator,
         api,
         MixerSensor,
@@ -208,7 +208,7 @@ def create_lambda_sensors(
         return []
 
     return create_sensors(
-        SENSOR_MAP_KEY["lambda"],
+        list(SENSOR_MAP_KEY["lambda"]),
         coordinator,
         api,
         LambdaSensors,
