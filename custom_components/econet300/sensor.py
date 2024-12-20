@@ -222,9 +222,9 @@ def create_lambda_sensor_entity_description(key: str) -> EconetSensorEntityDescr
         key=key,
         translation_key=camel_to_snake(key),
         icon=ENTITY_ICON.get(key, None),
-        native_unit_of_measurement=ENTITY_UNIT_MAP.get(key, None),
-        state_class=STATE_CLASS_MAP.get(key, None),
-        device_class=ENTITY_SENSOR_DEVICE_CLASS_MAP.get(key, None),
+        native_unit_of_measurement=ENTITY_UNIT_MAP.get(key),
+        state_class=STATE_CLASS_MAP.get(key),
+        device_class=ENTITY_SENSOR_DEVICE_CLASS_MAP.get(key),
         suggested_display_precision=ENTITY_PRECISION.get(key, 0),
         process_val=ENTITY_VALUE_PROCESSOR.get(key, lambda x: x / 10),
     )
