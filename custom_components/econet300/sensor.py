@@ -78,7 +78,7 @@ class MixerSensor(MixerEntity, EconetSensor):
         api: Econet300Api,
         idx: int,
     ):
-        """Initialize a new instance of the EconetSensor class."""
+        """Initialize a new instance of the MixerSensor."""
         super().__init__(description, coordinator, api, idx)
 
 
@@ -100,11 +100,13 @@ def create_sensor_entity_description(key: str) -> EconetSensorEntityDescription:
     _LOGGER.debug("Creating sensor entity description for key: %s", key)
     entity_description = EconetSensorEntityDescription(
         key=key,
-        device_class=ENTITY_SENSOR_DEVICE_CLASS_MAP.get(key, None),
-        entity_category=ENTITY_CATEGORY.get(key, None),
+        device_class=ENTITY_SENSOR_DEVICE_CLASS_MAP.get(key),
+        entity_category=ENTITY_CATEGORY.get(key),
         translation_key=camel_to_snake(key),
-        icon=ENTITY_ICON.get(key, None),
-        native_unit_of_measurement=ENTITY_UNIT_MAP.get(key, None),
+        icon=ENTITY_ICON.get(key),
+        native_unit_of_measurement=ENTITY_UNIT_MAP.get(
+            key,
+        ),
         state_class=STATE_CLASS_MAP.get(key, SensorStateClass.MEASUREMENT),
         suggested_display_precision=ENTITY_PRECISION.get(key, 0),
         process_val=ENTITY_VALUE_PROCESSOR.get(key, lambda x: x),
