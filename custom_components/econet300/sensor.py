@@ -177,12 +177,11 @@ def create_mixer_sensors(
     coordinator: EconetDataCoordinator, api: Econet300Api
 ) -> list[MixerSensor]:
     """Create individual sensor descriptions for mixer sensors."""
-    entities: list[MixerSensor] = []
 
     def mixer_filter(key: str) -> bool:
         return all(
             coordinator.data.get("regParams", {}).get(k) is not None
-            for k in SENSOR_MIXER_KEY.get(key, [])
+            for k in list(SENSOR_MIXER_KEY.get(key, []))
         )
 
     return create_sensors(
@@ -199,8 +198,6 @@ def create_lambda_sensors(
     coordinator: EconetDataCoordinator, api: Econet300Api
 ) -> list[LambdaSensors]:
     """Create controller sensor entities."""
-    entities: list[LambdaSensors] = []
-    sys_params = coordinator.data.get("sysParams", {})
 
     # Check if moduleLambdaSoftVer is None
     if coordinator.data.get("sysParams", {}).get("moduleLambdaSoftVer") is None:
